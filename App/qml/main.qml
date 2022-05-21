@@ -1,9 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
- import Qt.labs.platform 1.1
+import Qt.labs.platform 1.1
+import "controls"
+
 Window {
-    id: main
+    id: mainWindow
     width: 1000
     height: 580
     visible: true
@@ -12,9 +14,8 @@ Window {
 
     flags: Qt.Window | Qt.FramelessWindowHint
 
-
     QtObject{
-    id: internal
+        id: internal
 
 
     }
@@ -59,7 +60,7 @@ Window {
             Rectangle {
                 id: topBar
                 height: 60
-                color: "#012226"
+                color: "#1c1d20"
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -67,44 +68,34 @@ Window {
                 anchors.leftMargin: 0
                 anchors.topMargin: 0
 
-                Button {
-                    id: togglebutton
-                    width: 70
-                    height: 60
-                    text: qsTr("Toggle")
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.leftMargin: 0
-                }
+                ToggleButton {
+                    btnColorDefault: "#555555"
+                    btnIconSource: "../menu_icon.svg"
 
+                    //                    btnColorDefault: "#012d31"
+                    //                    btnColorMouseOver: "#23272e"
+                    //                    id: togglebutton
+                    //                    width: 70
+                    //                    height: 60
+                    //                    text: qsTr("Toggle")
+                    //                    anchors.left: parent.left
+                    //                    anchors.top: parent.top
+                    //                    anchors.topMargin: 0
+                    //                    anchors.leftMargin: 0
+
+
+                }
                 Rectangle {
                     id: topbardescription
                     y: 18
                     height: 25
-                    color: "#012d31"
+                    color: "#23272e"
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     anchors.rightMargin: 0
                     anchors.leftMargin: 70
                     anchors.bottomMargin: 0
-
-                    Label {
-                        id: topbarlabel
-                        color: "#e3f9fd"
-                        text: qsTr("App description")
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        verticalAlignment: Text.AlignVCenter
-                        font.pointSize: 10
-                        anchors.rightMargin: 300
-                        anchors.leftMargin: 10
-                        anchors.bottomMargin: 0
-                        anchors.topMargin: 0
-                    }
 
                     Label {
                         id: topright
@@ -122,6 +113,24 @@ Window {
                         anchors.rightMargin: 10
                         font.pointSize: 10
                     }
+
+                    Label {
+                        id: topbarlabel
+                        x: -60
+                        y: -35
+                        color: "#e3f9fd"
+                        text: qsTr("Planer systemu kolejkowania zadań")
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        verticalAlignment: Text.AlignVCenter
+                        font.pointSize: 10
+                        anchors.rightMargin: 300
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 0
+                        anchors.topMargin: 0
+                    }
                 }
 
                 Rectangle {
@@ -136,7 +145,7 @@ Window {
                     anchors.topMargin: 0
                     DragHandler{
                         onActiveChanged: if(active){
-                                             main.startSystemMove()
+                                             mainWindow.startSystemMove()
                                          }
                     }
 
@@ -156,7 +165,7 @@ Window {
                     Label {
                         id: label
                         color: "#e3f9fd"
-                        text: qsTr("My app name")
+                        text: qsTr("Planer zadań")
                         anchors.left: icon.right
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -180,32 +189,50 @@ Window {
                     anchors.bottomMargin: 0
                     anchors.leftMargin: 0
 
-                    Button {
+                    //                    TopBarButton {
+                    //                        id: button
+                    //                        btnIconSource: "../images/svg_images/minimize_icon.svg"
+
+                    //                    }
+
+                    //                    TopBarButton {
+                    //                        id: button1
+                    //                        btnIconSource: "../images/svg_images/maximize_icon.svg"
+                    //                    }
+
+                    //                    TopBarButton {
+                    //                        id: button2
+                    //                        visible: true
+                    //                        btnIconSource: "../images/svg_images/close_icon.svg"
+                    //                    }
+
+                    TopBarButton {
                         id: minimize
-                        width: 35
-                        text: qsTr("Button")
                         anchors.bottom: parent.bottom
+                        btnIconSource: "../minimize_icon.svg"
+                        btnColorDefault: "#555555"
                         anchors.bottomMargin: 0
-                        onClicked: main.showMinimized()
+                        onClicked: mainWindow.showMinimized()
                     }
 
-                    Button {
+                    TopBarButton {
                         id: maximize
-                        width: 35
-                        text: qsTr("Button")
                         anchors.bottom: parent.bottom
+                        btnColorDefault: "#555555"
+                        btnIconSource: "../maximize_icon.svg"
                         anchors.bottomMargin: 0
-                        onClicked: main.showMaximized()
+                        onClicked: mainWindow.showMaximized()
                     }
 
-                    Button {
+                    TopBarButton {
                         id: close
-                        width: 35
-                        text: qsTr("Button")
                         anchors.bottom: parent.bottom
+                        btnColorDefault: "#555555"
+                        btnIconSource: "../close_icon.svg"
                         anchors.bottomMargin: 0
-                        onClicked: main.close()
+                        onClicked: mainWindow.close()
                     }
+
                 }
             }
 
@@ -221,7 +248,7 @@ Window {
                 Rectangle {
                     id: leftmenu
                     width: 70
-                    color: "#012226"
+                    color: "#23272e"
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
@@ -241,25 +268,29 @@ Window {
                         anchors.bottomMargin: 90
                         anchors.topMargin: 0
 
-                        Button {
+                        OpenButton {
                             id: open
-                            text: qsTr("Button")
+                            //                            text: qsTr("Open")
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            anchors.topMargin: 10
+                            btnColorDefault: "#555555"
+                            btnIconSource: "../open_icon.svg"
+                            btnColorMouseOver: "#bc0c8c"
+                            anchors.topMargin: 0
                             anchors.leftMargin: 0
                             anchors.rightMargin: 0
                             clip: true
                             onClicked: fileDialog.open()
 
                         }
+
                     }
                 }
 
                 Rectangle {
                     id: contentpages
-                    color: "#00000000"
+                    color: "#1c1d20"
                     anchors.left: leftmenu.right
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -272,7 +303,7 @@ Window {
 
                 Rectangle {
                     id: rectangle
-                    color: "#012d31"
+                    color: "#23272e"
                     anchors.left: leftmenu.right
                     anchors.right: parent.right
                     anchors.top: contentpages.bottom
@@ -285,12 +316,13 @@ Window {
                     Label {
                         id: topbarlabel1
                         color: "#e3f9fd"
-                        text: qsTr("App description")
+                        text: qsTr("Wykonali: Leonard Feszczuk | Denis Firat | Maciej Marczyszyn")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         verticalAlignment: Text.AlignVCenter
+                        styleColor: "#23272e"
                         anchors.leftMargin: 10
                         anchors.bottomMargin: 0
                         anchors.topMargin: 0
@@ -301,4 +333,13 @@ Window {
             }
         }
     }
+    Connections{
+        target:backend
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.9}
+}
+##^##*/
